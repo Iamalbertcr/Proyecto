@@ -4,6 +4,9 @@
     <head>
         <meta charset="UTF-8">
         <title>Login</title>
+        <!-- FAVICON -->
+        <link rel="icon" type="image/x-icon"
+              href="<%= request.getContextPath()%>/img/ferremax-sinfondo.ico">
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
