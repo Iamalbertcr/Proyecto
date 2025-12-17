@@ -6,61 +6,174 @@
 %>
 
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Productos</title>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Productos</title>
 
-    </head>
+    <!-- FAVICON -->
+    <link rel="icon" type="image/x-icon"
+          href="<%= request.getContextPath()%>/img/ferremax-sinfondo.ico">
 
-    <body>
+    <!-- BOOTSTRAP 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
 
-        <h2>Listado de Productos</h2>
+    <!-- ESTILOS PERSONALIZADOS -->
+    <style>
+        body {
+            min-height: 100vh;
+            margin: 0;
+            background: linear-gradient(135deg,
+                #0b2fa3 0%,
+                #123fd1 35%,
+                #091f63 70%,
+                #050f3a 100%);
+            overflow-x: hidden;
+            font-family: 'Segoe UI', sans-serif;
+        }
 
-        <a class="volverAlpanel" href="<%= request.getContextPath()%>/index.jsp"></a>
-        <br><br>
+        /* Líneas diagonales */
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background: repeating-linear-gradient(
+                135deg,
+                rgba(255,255,255,0.06),
+                rgba(255,255,255,0.06) 1px,
+                transparent 1px,
+                transparent 40px
+            );
+            pointer-events: none;
+            z-index: 0;
+        }
 
-        <!-- ✅ ÚNICO BOTÓN AGREGAR -->
-        <a class="btn btn-add" href="ProductoServlet?accion=nuevo">
-            + Agregar Producto
-        </a>
+        /* Tarjeta principal */
+        .glass-card {
+            background: rgba(255,255,255,0.12);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border-radius: 22px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.45);
+            padding: 30px;
+            color: white;
+            position: relative;
+            z-index: 1;
+        }
 
-        <table>
-            <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Precio</th>
-                <th>Cantidad</th>
-                <th>Acciones</th>
-            </tr>
+        /* Tabla */
+        .table {
+            color: white;
+        }
 
-            <%
-                if (lista != null) {
-                    for (Productos p : lista) {
-            %>
-            <tr>
-                <td><%= p.getId()%></td>
-                <td><%= p.getNombre()%></td>
-                <td>₡<%= p.getPrecio()%></td>
-                <td><%= p.getCantidad()%></td>
-                <td>
-                    <a class="btn"
-                       href="ProductoServlet?accion=editar&id=<%=p.getId()%>">
-                        Editar
-                    </a>
+        .table thead {
+            background: rgba(255,255,255,0.18);
+        }
 
-                    <a class="btn btn-danger"
-                       href="ProductoServlet?accion=eliminar&id=<%=p.getId()%>"
-                       onclick="return confirm('¿Desea eliminar este producto?');">
-                        Eliminar
-                    </a>
-                </td>
-            </tr>
-            <%
+        .table-hover tbody tr:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        /* Botones personalizados */
+        .btn-custom {
+            background: rgba(255,255,255,0.18);
+            border: 1px solid rgba(255,255,255,0.35);
+            color: white;
+        }
+
+        .btn-custom:hover {
+            background: rgba(255,255,255,0.3);
+            color: white;
+        }
+
+        .btn-volver {
+            border: 1px solid rgba(255,255,255,0.5);
+            color: white;
+        }
+
+        .btn-volver:hover {
+            background: rgba(255,255,255,0.25);
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container py-5">
+
+    <!-- CONTENEDOR -->
+    <div class="glass-card">
+
+        <!-- ENCABEZADO -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold mb-0">Listado de Productos</h2>
+
+            <a href="<%= request.getContextPath()%>/index.jsp"
+               class="btn btn-volver">
+                ⬅ Volver al Panel
+            </a>
+        </div>
+
+        <!-- BOTÓN AGREGAR -->
+        <div class="mb-3">
+            <a href="ProductoServlet?accion=nuevo"
+               class="btn btn-custom">
+                + Agregar Producto
+            </a>
+        </div>
+
+        <!-- TABLA -->
+        <div class="table-responsive">
+            <table class="table table-hover align-middle text-center mb-0">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Precio</th>
+                        <th>Cantidad</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                <%
+                    if (lista != null) {
+                        for (Productos p : lista) {
+                %>
+                    <tr>
+                        <td><%= p.getId() %></td>
+                        <td><%= p.getNombre() %></td>
+                        <td>₡ <%= p.getPrecio() %></td>
+                        <td><%= p.getCantidad() %></td>
+                        <td>
+                            <a href="ProductoServlet?accion=editar&id=<%=p.getId()%>"
+                               class="btn btn-sm btn-warning me-1">
+                                ✏ Editar
+                            </a>
+
+                            <a href="ProductoServlet?accion=eliminar&id=<%=p.getId()%>"
+                               class="btn btn-sm btn-danger"
+                               onclick="return confirm('¿Desea eliminar este producto?');">
+                                🗑 Eliminar
+                            </a>
+                        </td>
+                    </tr>
+                <%
+                        }
                     }
-                }
-            %>
+                %>
+                </tbody>
+            </table>
+        </div>
 
-        </table>
+    </div>
 
-    </body>
+</div>
+
+<!-- BOOTSTRAP JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
 </html>

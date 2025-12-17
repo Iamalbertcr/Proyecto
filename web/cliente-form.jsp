@@ -10,7 +10,9 @@
 <html>
     <head>
         <title><%= editar ? "Editar Cliente" : "Nuevo Cliente"%></title>
-
+        <!-- FAVICON -->
+        <link rel="icon" type="image/x-icon"
+              href="<%= request.getContextPath()%>/img/ferremax-sinfondo.ico">
         <!-- CSS correctamente enlazado -->
         <link rel="stylesheet" href="<%= request.getContextPath()%>/ClieProdStyle.css">
     </head>

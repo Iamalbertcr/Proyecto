@@ -3,6 +3,9 @@
 <html>
     <head>
         <title>Panel Principal</title>
+        <!-- FAVICON -->
+        <link rel="icon" type="image/x-icon"
+              href="<%= request.getContextPath()%>/img/ferremax-sinfondo.ico">
         <link rel="stylesheet" href="ClieProdStyle.css">
     </head>
     <body>

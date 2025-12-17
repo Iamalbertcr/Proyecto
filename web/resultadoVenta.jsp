@@ -11,6 +11,9 @@
 <html>
     <head><meta charset="UTF-8"><title>Venta Registrada</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+        <!-- FAVICON -->
+        <link rel="icon" type="image/x-icon"
+              href="<%= request.getContextPath()%>/img/ferremax-sinfondo.ico">
     </head>
     <body class="bg-dark text-light">
         <div class="container mt-5">
@@ -34,7 +37,7 @@
                                 <td>₡ <%= String.format("%.2f", it.getSubtotal())%></td>
                             </tr>
                             <%   }
-            }%>
+                                }%>
                         </tbody>
                     </table>
 

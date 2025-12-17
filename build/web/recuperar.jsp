@@ -3,6 +3,9 @@
 <html>
     <head>
         <title>Recuperar Contraseña</title>
+        <!-- FAVICON -->
+        <link rel="icon" type="image/x-icon"
+              href="<%= request.getContextPath()%>/img/ferremax-sinfondo.ico">
         <style>
             body {
                 font-family: Arial, sans-serif;
