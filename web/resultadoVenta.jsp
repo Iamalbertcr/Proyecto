@@ -11,6 +11,7 @@
 <html>
     <head><meta charset="UTF-8"><title>Venta Registrada</title>
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="resultadoVenta.css">
         <!-- FAVICON -->
         <link rel="icon" type="image/x-icon"
               href="<%= request.getContextPath()%>/img/ferremax-sinfondo.ico">
@@ -19,7 +20,7 @@
         <div class="container mt-5">
             <div class="card bg-secondary bg-opacity-25" style="max-width:900px;margin:auto;">
                 <div class="card-body">
-                    <h2 class="text-center mb-4">✅ Venta registrada exitosamente</h2>
+                    <h2 class="text-center mb-4"> Venta registrada exitosamente</h2>
                     <% if (idVenta != null) {%>
                     <h5 class="text-center text-info">ID de venta: <%= idVenta%></h5>
                     <% } %>
