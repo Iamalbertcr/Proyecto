@@ -1,68 +1,85 @@
-<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="modelo.Cliente" %>
 
 <%
     Cliente c = (Cliente) request.getAttribute("cliente");
-    boolean editar = (c != null);
+    boolean editando = (c != null);
 %>
 
 <!DOCTYPE html>
 <html>
-    <head>
-        <title><%= editar ? "Editar Cliente" : "Nuevo Cliente"%></title>
-        <!-- FAVICON -->
-        <link rel="icon" type="image/x-icon"
-              href="<%= request.getContextPath()%>/img/ferremax-sinfondo.ico">
-        <!-- CSS correctamente enlazado -->
-        <link rel="stylesheet" href="<%= request.getContextPath()%>/ClieProdStyle.css">
-    </head>
-    <body>
+<head>
+    <meta charset="UTF-8">
+    <title><%= editando ? "Editar Cliente" : "Agregar Cliente" %></title>
 
-        <div class="form-container">
+    <!-- FAVICON -->
+    <link rel="icon" type="image/x-icon"
+          href="<%= request.getContextPath() %>/img/ferremax-sinfondo.ico">
 
-            <h2><%= editar ? "Editar Cliente" : "Agregar Cliente"%></h2>
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+<div class="container mt-5">
+    <div class="card shadow-lg border-0 rounded-3">
+        <div class="card-header bg-primary text-white text-center">
+            <h4 class="m-0">
+                <%= editando ? "Editar Cliente" : "Agregar Cliente" %>
+            </h4>
+        </div>
+
+        <div class="card-body">
 
             <form action="ClienteServlet" method="post">
 
-                <input type="hidden" name="accion" value="<%= editar ? "actualizar" : "agregar"%>">
+                <!-- Acción -->
+                <input type="hidden" name="accion"
+                       value="<%= editando ? "actualizar" : "agregar" %>">
 
-                <% if (editar) {%>
-                <input type="hidden" name="id" value="<%= c.getId()%>">
-                <% }%>
+                <!-- ID solo si edita -->
+                <% if (editando) { %>
+                    <input type="hidden" name="id" value="<%= c.getId() %>">
+                <% } %>
 
-                <div class="form-group">
-                    <label>Nombre</label>
-                    <input type="text" name="nombre" required
-                           value="<%= editar ? c.getNombre() : ""%>">
+                <!-- Nombre -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Nombre</label>
+                    <input type="text" name="nombre" class="form-control"
+                           value="<%= editando ? c.getNombre() : "" %>" required>
                 </div>
 
-                <div class="form-group">
-                    <label>Cédula</label>
-                    <input type="text" name="cedula" required
-                           value="<%= editar ? c.getCedula() : ""%>">
+                <!-- Cédula -->
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Cédula</label>
+                    <input type="text" name="cedula" class="form-control"
+                           value="<%= editando ? c.getCedula() : "" %>" required>
                 </div>
 
-                <div class="form-group">
-                    <label>Correo</label>
-                    <input type="email" name="correo" required
-                           value="<%= editar ? c.getCorreo() : ""%>">
+                <!-- Correo -->
+                <div class="mb-4">
+                    <label class="form-label fw-bold">Correo</label>
+                    <input type="email" name="correo" class="form-control"
+                           value="<%= editando ? c.getCorreo() : "" %>" required>
                 </div>
 
-                <div class="btn-group">
-                    <button type="submit" class="btn btn-save">
-                        Guardar
+                <!-- Botones -->
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn btn-success">
+                        💾 <%= editando ? "Actualizar" : "Guardar" %>
                     </button>
 
-                    <!-- Cancelar vuelve al panel principal -->
-                    <a href="<%= request.getContextPath()%>/principal.jsp"
-                       class="btn btn-cancel">
-                        Cancelar
+                    <a href="ClienteServlet?accion=listar" class="btn btn-secondary">
+                        ❌ Cancelar
                     </a>
                 </div>
 
             </form>
 
         </div>
+    </div>
+</div>
 
-    </body>
+</body>
 </html>

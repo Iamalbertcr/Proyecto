@@ -80,6 +80,10 @@
                         <i class="bi bi-receipt"></i> Facturar Venta
                     </h3>
                 </div>
+                <a href="<%= request.getContextPath()%>/index.jsp"
+               class="btn btn-volver">
+                ⬅ Volver al Panel
+            </a>
 
                 <div class="card-body p-4">
 
