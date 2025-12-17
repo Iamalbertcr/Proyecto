@@ -1,12 +1,14 @@
 package modelo;
 
 public class Usuario {
+
     private int id;
     private String usuario;
     private String clave;   // <-- esto SÍ coincide con tu BD
     private String rol;
 
-    public Usuario() {}
+    public Usuario() {
+    }
 
     public Usuario(String usuario, String clave, String rol) {
         this.usuario = usuario;
@@ -14,15 +16,35 @@ public class Usuario {
         this.rol = rol;
     }
 
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public int getId() {
+        return id;
+    }
 
-    public String getUsuario() { return usuario; }
-    public void setUsuario(String usuario) { this.usuario = usuario; }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    public String getClave() { return clave; }
-    public void setClave(String clave) { this.clave = clave; }
+    public String getUsuario() {
+        return usuario;
+    }
 
-    public String getRol() { return rol; }
-    public void setRol(String rol) { this.rol = rol; }
+    public void setUsuario(String usuario) {
+        this.usuario = usuario;
+    }
+
+    public String getClave() {
+        return clave;
+    }
+
+    public void setClave(String clave) {
+        this.clave = clave;
+    }
+
+    public String getRol() {
+        return rol;
+    }
+
+    public void setRol(String rol) {
+        this.rol = rol;
+    }
 }

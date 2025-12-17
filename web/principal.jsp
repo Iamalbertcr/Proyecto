@@ -8,7 +8,7 @@
 %>
 
 <h1>Bienvenido a Ferremax</h1>
-<p>Usuario conectado: <%= usuario %></p>
+<p>Usuario conectado: <%= usuario%></p>
 
 <a href="LogoutServlet">Cerrar sesión</a>
 

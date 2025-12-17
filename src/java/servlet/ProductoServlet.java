@@ -14,6 +14,9 @@ public class ProductoServlet extends HttpServlet {
 
     private ProductosDAO dao = new ProductosDAO();
 
+    // =========================
+    // GET
+    // =========================
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
@@ -23,29 +26,26 @@ public class ProductoServlet extends HttpServlet {
         try {
             if ("listar".equals(accion)) {
 
-                req.setAttribute("productos", dao.listar());
+                req.setAttribute("lista", dao.listar());
                 req.getRequestDispatcher("productos.jsp").forward(req, resp);
+
+            } else if ("nuevo".equals(accion)) {
+
+                req.getRequestDispatcher("agregarProducto.jsp").forward(req, resp);
 
             } else if ("editar".equals(accion)) {
 
-                String idStr = req.getParameter("id");
-                if (idStr != null && !idStr.isEmpty()) {
-                    int id = Integer.parseInt(idStr);
-                    Productos p = dao.obtenerPorId(id);
+                int id = Integer.parseInt(req.getParameter("id"));
+                Productos p = dao.obtenerPorId(id);
 
-                    req.setAttribute("producto", p);
-                    req.getRequestDispatcher("editarProducto.jsp").forward(req, resp);
-                } else {
-                    resp.sendRedirect("ProductoServlet?accion=listar");
-                }
+                req.setAttribute("producto", p);
+                req.getRequestDispatcher("editarProducto.jsp").forward(req, resp);
 
             } else if ("eliminar".equals(accion)) {
 
-                String idStr = req.getParameter("id");
-                if (idStr != null && !idStr.isEmpty()) {
-                    int id = Integer.parseInt(idStr);
-                    dao.eliminar(id);
-                }
+                int id = Integer.parseInt(req.getParameter("id"));
+                dao.eliminar(id);
+
                 resp.sendRedirect("ProductoServlet?accion=listar");
 
             } else {
@@ -53,12 +53,15 @@ public class ProductoServlet extends HttpServlet {
                 resp.sendRedirect("ProductoServlet?accion=listar");
             }
 
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             resp.sendRedirect("ProductoServlet?accion=listar");
         }
     }
 
+    // =========================
+    // POST
+    // =========================
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
@@ -72,7 +75,7 @@ public class ProductoServlet extends HttpServlet {
                 p.setCodigo(req.getParameter("codigo"));
                 p.setNombre(req.getParameter("nombre"));
                 p.setPrecio(Double.parseDouble(req.getParameter("precio")));
-                
+                p.setCantidad(Integer.parseInt(req.getParameter("cantidad")));
 
                 dao.agregar(p);
 
@@ -85,7 +88,7 @@ public class ProductoServlet extends HttpServlet {
                 p.setCodigo(req.getParameter("codigo"));
                 p.setNombre(req.getParameter("nombre"));
                 p.setPrecio(Double.parseDouble(req.getParameter("precio")));
-                
+                p.setCantidad(Integer.parseInt(req.getParameter("cantidad")));
 
                 dao.actualizar(p);
 
@@ -96,8 +99,8 @@ public class ProductoServlet extends HttpServlet {
                 resp.sendRedirect("ProductoServlet?accion=listar");
             }
 
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
             resp.sendRedirect("ProductoServlet?accion=listar");
         }
     }

@@ -8,17 +8,16 @@ public class ClienteDAO {
 
     private Connection getConexion() throws SQLException {
         return DriverManager.getConnection(
-            "jdbc:mysql://localhost:3306/ferremax",
-            "root",
-            ""
+                "jdbc:mysql://localhost:3306/ferremax",
+                "root",
+                ""
         );
     }
 
     // INSERT
     public boolean agregar(Cliente c) {
         String sql = "INSERT INTO clientes(nombre, cedula, correo) VALUES (?,?,?)";
-        try (Connection con = getConexion();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = getConexion(); PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setString(1, c.getNombre());
             ps.setString(2, c.getCedula());
@@ -37,9 +36,7 @@ public class ClienteDAO {
         List<Cliente> lista = new ArrayList<>();
         String sql = "SELECT * FROM clientes";
 
-        try (Connection con = getConexion();
-             PreparedStatement ps = con.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+        try (Connection con = getConexion(); PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 Cliente c = new Cliente();
@@ -61,8 +58,7 @@ public class ClienteDAO {
         Cliente c = null;
         String sql = "SELECT * FROM clientes WHERE id=?";
 
-        try (Connection con = getConexion();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = getConexion(); PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
@@ -84,8 +80,7 @@ public class ClienteDAO {
     // UPDATE
     public boolean actualizar(Cliente c) {
         String sql = "UPDATE clientes SET nombre=?, cedula=?, correo=? WHERE id=?";
-        try (Connection con = getConexion();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = getConexion(); PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setString(1, c.getNombre());
             ps.setString(2, c.getCedula());
@@ -103,8 +98,7 @@ public class ClienteDAO {
     // DELETE
     public boolean eliminar(int id) {
         String sql = "DELETE FROM clientes WHERE id=?";
-        try (Connection con = getConexion();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = getConexion(); PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setInt(1, id);
             ps.executeUpdate();

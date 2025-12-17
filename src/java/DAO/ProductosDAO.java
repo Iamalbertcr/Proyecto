@@ -11,21 +11,19 @@ public class ProductosDAO {
         Productos p = null;
         String sql = "SELECT id, nombre, precio, cantidad FROM productos WHERE id = ?";
 
-        try (Connection con = Conexion.getConexion();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = Conexion.getConexion(); PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
 
-            try (ResultSet rs = ps.executeQuery()) {
-                if (rs.next()) {
-                    p = new Productos(
+            if (rs.next()) {
+                p = new Productos(
                         rs.getInt("id"),
-                        null,  // tu DB no tiene código
+                        null,
                         rs.getString("nombre"),
                         rs.getDouble("precio"),
-                        rs.getInt("cantidad")  // se asigna al stock
-                    );
-                }
+                        rs.getInt("cantidad")
+                );
             }
 
         } catch (Exception e) {
@@ -39,17 +37,15 @@ public class ProductosDAO {
         List<Productos> lista = new ArrayList<>();
         String sql = "SELECT id, nombre, precio, cantidad FROM productos";
 
-        try (Connection con = Conexion.getConexion();
-             PreparedStatement ps = con.prepareStatement(sql);
-             ResultSet rs = ps.executeQuery()) {
+        try (Connection con = Conexion.getConexion(); PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 Productos p = new Productos(
-                    rs.getInt("id"),
-                    null,
-                    rs.getString("nombre"),
-                    rs.getDouble("precio"),
-                    rs.getInt("cantidad")
+                        rs.getInt("id"),
+                        null,
+                        rs.getString("nombre"),
+                        rs.getDouble("precio"),
+                        rs.getInt("cantidad")
                 );
                 lista.add(p);
             }
@@ -62,14 +58,46 @@ public class ProductosDAO {
     }
 
     public void eliminar(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "DELETE FROM productos WHERE id = ?";
+        try (Connection con = Conexion.getConexion(); PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setInt(1, id);
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void agregar(Productos p) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "INSERT INTO productos (nombre, precio, cantidad) VALUES (?, ?, ?)";
+
+        try (Connection con = Conexion.getConexion(); PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, p.getNombre());
+            ps.setDouble(2, p.getPrecio());
+            ps.setInt(3, p.getCantidad());
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public void actualizar(Productos p) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        String sql = "UPDATE productos SET nombre=?, precio=?, cantidad=? WHERE id=?";
+
+        try (Connection con = Conexion.getConexion(); PreparedStatement ps = con.prepareStatement(sql)) {
+
+            ps.setString(1, p.getNombre());
+            ps.setDouble(2, p.getPrecio());
+            ps.setInt(3, p.getCantidad());
+            ps.setInt(4, p.getId());
+            ps.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
+
 }

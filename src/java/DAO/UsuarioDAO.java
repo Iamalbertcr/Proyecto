@@ -12,8 +12,7 @@ public class UsuarioDAO {
 
         String sql = "SELECT * FROM usuarios WHERE usuario=? AND clave=?";
 
-        try (Connection con = Conexion.getConexion();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = Conexion.getConexion(); PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setString(1, usuario);
             ps.setString(2, clave);
@@ -41,8 +40,7 @@ public class UsuarioDAO {
 
         String sql = "SELECT clave FROM usuarios WHERE usuario=?";
 
-        try (Connection con = Conexion.getConexion();
-             PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = Conexion.getConexion(); PreparedStatement ps = con.prepareStatement(sql)) {
 
             ps.setString(1, usuario);
 
@@ -62,21 +60,20 @@ public class UsuarioDAO {
     // -------- AGREGAR NUEVO USUARIO --------
     public boolean agregar(Usuario u) {
 
-    String sql = "INSERT INTO usuarios(usuario, clave, rol) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO usuarios(usuario, clave, rol) VALUES (?, ?, ?)";
 
-    try (Connection con = Conexion.getConexion();
-         PreparedStatement ps = con.prepareStatement(sql)) {
+        try (Connection con = Conexion.getConexion(); PreparedStatement ps = con.prepareStatement(sql)) {
 
-        ps.setString(1, u.getUsuario());
-        ps.setString(2, u.getClave());
-        ps.setString(3, u.getRol());
+            ps.setString(1, u.getUsuario());
+            ps.setString(2, u.getClave());
+            ps.setString(3, u.getRol());
 
-        return ps.executeUpdate() > 0; // más claro
+            return ps.executeUpdate() > 0; // más claro
 
-    } catch (Exception e) {
-        e.printStackTrace();
-        return false;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
-}
 
 }

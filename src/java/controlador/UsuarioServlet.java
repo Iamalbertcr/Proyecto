@@ -33,9 +33,7 @@ public class UsuarioServlet extends HttpServlet {
                 request.setAttribute("error", "Usuario o contraseña incorrectos");
                 request.getRequestDispatcher("login.jsp").forward(request, response);
             }
-        }
-
-        else if ("agregar".equalsIgnoreCase(accion)) {
+        } else if ("agregar".equalsIgnoreCase(accion)) {
 
             String usuario = request.getParameter("usuario");
             String clave = request.getParameter("contrasena");

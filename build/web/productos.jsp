@@ -1,59 +1,66 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="java.util.*, modelo.Productos" %>
+
 <%
     List<Productos> lista = (List<Productos>) request.getAttribute("lista");
 %>
+
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Productos</title>
-    <link rel="stylesheet" href="ClieProdStyle.css">
-</head>
+    <head>
+        <title>Productos</title>
 
-<body>
+    </head>
 
-<h2>Listado de Productos</h2>
+    <body>
 
-<a class="volverAlpanel" href="panel.jsp"></a>
+        <h2>Listado de Productos</h2>
 
-<br>
+        <a class="volverAlpanel" href="<%= request.getContextPath()%>/index.jsp"></a>
+        <br><br>
 
-<a class="btn btn-add" href="ProductoServlet?accion=nuevo">+ Agregar Producto</a>
+        <!-- ✅ ÚNICO BOTÓN AGREGAR -->
+        <a class="btn btn-add" href="ProductoServlet?accion=nuevo">
+            + Agregar Producto
+        </a>
 
-<table>
-    <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Precio</th>
-        <th>Cantidad</th>
-        <th>Acciones</th>
-    </tr>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Acciones</th>
+            </tr>
 
-    <% 
-        if (lista != null) {
-            for (Productos p : lista) { 
-    %>
+            <%
+                if (lista != null) {
+                    for (Productos p : lista) {
+            %>
+            <tr>
+                <td><%= p.getId()%></td>
+                <td><%= p.getNombre()%></td>
+                <td>₡<%= p.getPrecio()%></td>
+                <td><%= p.getCantidad()%></td>
+                <td>
+                    <a class="btn"
+                       href="ProductoServlet?accion=editar&id=<%=p.getId()%>">
+                        Editar
+                    </a>
 
-    <tr>
-        <td><%= p.getId() %></td>
-        <td><%= p.getNombre() %></td>
-        <td>₡<%= p.getPrecio() %></td>
-        <td><%= p.getCantidad() %></td>
-        <td>
-            <a class="btn" href="ProductoServlet?accion=editar&id=<%=p.getId()%>">Editar</a>
-            <a class="btn btn-danger" href="ProductoServlet?accion=eliminar&id=<%=p.getId()%>">Eliminar</a>
-        </td>
-    </tr>
+                    <a class="btn btn-danger"
+                       href="ProductoServlet?accion=eliminar&id=<%=p.getId()%>"
+                       onclick="return confirm('¿Desea eliminar este producto?');">
+                        Eliminar
+                    </a>
+                </td>
+            </tr>
+            <%
+                    }
+                }
+            %>
 
-    <% 
-            }
-        }
-    %>
+        </table>
 
-</table>
-
-<br>
-<a href="panel.jsp">⬅ Volver al Panel</a>
-
-</body>
+    </body>
 </html>

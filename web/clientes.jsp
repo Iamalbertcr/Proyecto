@@ -5,45 +5,47 @@
 %>
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Clientes</title>
-    <link rel="stylesheet" href="ClieProdStyle.css">
-</head>
-<body>
+    <head>
+        <title>Clientes</title>
+        <!-- Carga del CSS -->
+        <link rel="stylesheet" href="<%= request.getContextPath()%>/indexStyle.css">
+    </head>
+    <body>
 
-<h2>Listado de Clientes</h2>
+        <h2>Listado de Clientes</h2>
 
-<a class="volverAlpanel" href="<%= request.getContextPath() %>/index.jsp"></a>
+        <a class="volverAlpanel" href="<%= request.getContextPath()%>/index.jsp"></a>
 
-<br>
+        <br>
 
-<a class="btn btn-add" href="ClienteServlet?accion=nuevo">+ Agregar Cliente</a>
+        <a class="btn btn-add" href="ClienteServlet?accion=nuevo">+ Agregar Cliente</a>
 
 
-<table>
-    <tr>
-        <th>ID</th><th>Nombre</th><th>Cédula</th><th>Correo</th><th>Acciones</th>
-    </tr>
+        <table>
+            <tr>
+                <th>ID</th><th>Nombre</th><th>Cédula</th><th>Correo</th><th>Acciones</th>
+            </tr>
 
-    <% if(lista != null) { 
-        for(Cliente c : lista) { %>
+            <% if (lista != null) {
+            for (Cliente c : lista) {%>
 
             <tr>
-                <td><%= c.getId() %></td>
-                <td><%= c.getNombre() %></td>
-                <td><%= c.getCedula() %></td>
-                <td><%= c.getCorreo() %></td>
+                <td><%= c.getId()%></td>
+                <td><%= c.getNombre()%></td>
+                <td><%= c.getCedula()%></td>
+                <td><%= c.getCorreo()%></td>
                 <td>
                     <a class="btn" href="ClienteServlet?accion=editar&id=<%=c.getId()%>">Editar</a>
                     <a class="btn btn-danger" href="ClienteServlet?accion=eliminar&id=<%=c.getId()%>">Eliminar</a>
                 </td>
             </tr>
 
-    <% }} %>
+            <% }
+        }%>
 
-</table>
+        </table>
 
-<br>
+        <br>
 
-</body>
+    </body>
 </html>

@@ -72,9 +72,7 @@ public class VentaDAO {
         String sql = "SELECT idVenta, fecha, cliente, total FROM ventas";
 
         try (
-                Connection con = Conexion.getConexion(); 
-                PreparedStatement ps = con.prepareStatement(sql); 
-                ResultSet rs = ps.executeQuery()) {
+                Connection con = Conexion.getConexion(); PreparedStatement ps = con.prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 Venta v = new Venta();
@@ -86,16 +84,12 @@ public class VentaDAO {
                 lista.add(v);
             }
 
-        } 
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         System.out.print(lista.size());
         return lista;
-        
-        
-    }
 
-    
+    }
 
 }
