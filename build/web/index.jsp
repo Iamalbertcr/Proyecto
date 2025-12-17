@@ -18,9 +18,15 @@
         <meta charset="UTF-8">
         <title>Panel</title>
 
-        <!-- Carga del CSS -->
-        <link rel="stylesheet" href="<%= request.getContextPath()%>/indexStyle.css">
+        <!-- FAVICON -->
+        <link rel="icon" type="image/x-icon"
+              href="<%= request.getContextPath()%>/img/ferremax-sinfondo.ico">
+
+        <!-- CSS -->
+        <link rel="stylesheet"
+              href="<%= request.getContextPath()%>/indexStyle.css">
     </head>
+
     <body>
 
         <div class="panel">
@@ -28,19 +34,18 @@
 
             <div class="menu-grid">
 
-                <% if ("administrador".equalsIgnoreCase(rol)) { %>
-                <a href="${pageContext.request.contextPath}/productos.jsp">📦 Productos</a>
+                <% if ("administrador".equalsIgnoreCase(rol)) {%>
+                <a href="<%= request.getContextPath()%>/productos.jsp">📦 Productos</a>
                 <a href="ClienteServlet?accion=listar">👥 Usuarios</a>
                 <a href="AgregarUsuario.jsp">➕ Agregar usuario</a>
                 <a href="ListarVentasServlet">📊 Reportes Ventas</a>
                 <% } %>
-                <% if ("empleado".equalsIgnoreCase(rol)) { %>
+
+                <% if ("empleado".equalsIgnoreCase(rol)) {%>
                 <a href="InventarioServlet?accion=listar">📦 Inventario</a>
                 <a href="ClienteServlet?accion=listar">👥 Usuarios</a>
-                <a href="${pageContext.request.contextPath}/FacturarVenta.jsp">🛒 Ventas</a>
+                <a href="<%= request.getContextPath()%>/FacturarVenta.jsp">🛒 Ventas</a>
                 <% }%>
-
-
 
             </div>
 
