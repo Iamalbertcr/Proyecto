@@ -7,12 +7,19 @@ import java.util.*;
 public class ClienteDAO {
 
     private Connection getConexion() throws SQLException {
-        return DriverManager.getConnection(
-                "jdbc:mysql://localhost:3306/ferremax",
-                "root",
-                ""
-        );
+    try {
+        Class.forName("com.mysql.cj.jdbc.Driver");
+    } catch (ClassNotFoundException e) {
+        e.printStackTrace();
     }
+
+    return DriverManager.getConnection(
+        "jdbc:mysql://localhost:3306/ferremax?useSSL=false&serverTimezone=UTC",
+        "root",
+        ""
+    );
+}
+
 
     // INSERT
     public boolean agregar(Cliente c) {

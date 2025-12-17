@@ -9,13 +9,15 @@ public class Venta {
     private String cliente;
     private double total;
     private List<VentaItem> items;
+    private int clienteId;
 
-    public Venta(String fecha, String cliente, double total, List<VentaItem> items) {
-        this.fecha = fecha;
-        this.cliente = cliente;
-        this.total = total;
-        this.items = items;
-    }
+    public Venta(String fecha, int clienteId, double total, List<VentaItem> items) {
+    this.fecha = fecha;
+    this.clienteId = clienteId;
+    this.total = total;
+    this.items = items;
+}
+
 
     public Venta() {
 

@@ -8,6 +8,7 @@ import modelo.VentaItem;
 import jakarta.servlet.*;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.*;
+
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -24,8 +25,15 @@ public class VentasServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        String cliente = request.getParameter("cliente");
-        String[] productoIds = request.getParameterValues("productoId[]"); // ids from form
+        // ===============================
+        // CLIENTE (ID)
+        // ===============================
+        int clienteId = Integer.parseInt(request.getParameter("clienteId"));
+
+        // ===============================
+        // PRODUCTOS
+        // ===============================
+        String[] productoIds = request.getParameterValues("productoId[]");
         String[] cantidades = request.getParameterValues("cantidad[]");
 
         List<VentaItem> items = new ArrayList<>();
@@ -38,26 +46,41 @@ public class VentasServlet extends HttpServlet {
                     int cant = Integer.parseInt(cantidades[i]);
 
                     Productos prod = productoDAO.obtenerPorId(idProd);
+
                     if (prod != null) {
-                        VentaItem it = new VentaItem(prod, cant);
-                        items.add(it);
-                        total += it.getSubtotal();
+                        VentaItem item = new VentaItem(prod, cant);
+                        items.add(item);
+                        total += item.getSubtotal();
                     }
-                } catch (Exception ex) {
-                    ex.printStackTrace();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         }
 
-        String fecha = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-        Venta venta = new Venta(fecha, cliente, total, items);
+        // ===============================
+        // FECHA
+        // ===============================
+        String fecha = LocalDateTime.now()
+                .format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+
+        // ===============================
+        // VENTA
+        // ===============================
+        Venta venta = new Venta(fecha, clienteId, total, items);
 
         int idVenta = ventaDAO.registrarVenta(venta);
 
-        // Calculo de subtotal e IVA simple
+        // ===============================
+        // CALCULOS
+        // ===============================
         double iva = total * 0.13;
         double subtotal = total - iva;
 
+        // ===============================
+        // ENVIO A JSP
+        // ===============================
         request.setAttribute("items", items);
         request.setAttribute("subtotal", subtotal);
         request.setAttribute("iva", iva);
